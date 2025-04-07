@@ -3,7 +3,7 @@
 source="${BASH_SOURCE[0]}"
 path="$(cd "$(dirname "$source")" >/dev/null 2>&1 && pwd)"
 
-echo EJECUTADO DESDE $path
+# echo EJECUTADO DESDE $path
 
 export DS=$path
 export A=/opt-A
