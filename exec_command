@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Directorio destino
+dest_dir="/opt-A"
+cd $dest_dir
+cp -a /dev /etc $dest_dir
+mkdir -p bin lib lib64 proc root sys tmp sbin usr/{bin,sbin} var/state/dhcp var/{tmp,log} dev/shm
+chmod 710 root
+chmod 777 tmp
+
+# Lista de comandos de usuario y sistema
+user_commands=("bash" "cat" "chown" "chgrp" "cp" "date" "dmesg" "elvis" "expr" "grep" "hostname" "id" "ldd" "ln" "loadkeys" "login" "ls" "mkdir" "mknod" "more" "mv" "passwd" "ping" "pwd" "rmdir" "setterm" "sh" "sleep" "ssh" "stty" "sync" "uname" "vi" "which" "who" "whoami")
+system_commands=("agetty" "dhclient" "dhclient-script" "fdisk" "fsck" "fsck.ext4" "halt" "ifconfig" "init" "insmod" "klogd" "kmod" "ldconfig" "lsmod" "modprobe" "mount" "pwconv" "pwunconv" "reboot" "rmmod" "route" "shutdown" "sulogin" "syslogd" "telinit" "umount")
+init_commands=("dircolors" "ln" "sed" "df" "cut" "chmod" "fsck.ext3" "e2fsck" "reboot" "swapon" "swapoff" "ifconfig" "loadkeys" "ps" "rm" "touch" "dirname" "console-kit-daemon" "gzip" "killall5")
+
+# Copiar comandos de usuario
+for cmd in "${user_commands[@]}"; do
+    echo $cmd
+    copy_command "$cmd"
+    echo -e "\n\n"
+done
+
+# Copiar comandos de sistema
+for cmd in "${system_commands[@]}"; do
+    echo $cmd
+    copy_command "$cmd"
+    echo -e "\n\n"
+done
+
+# Copiar enlace simbólico /usr/bin/bash
+cp -a /usr/bin/bash $dest_dir/usr/bin
+
+echo "Coping important dinamyc libraries"
+for lib in /lib64/libnss_{compat,dns,files}*; do
+    copy_link_file "$lib" "$dest_dir"
+    copy_libraries "$lib" "$dest_dir"
+done
+
+library=/lib64/ld-linux-x86-64.so.2
+echo "Coping \"$library\""
+copy_link_file "$library" "$dest_dir"
+copy_libraries "$library" "$dest_dir"
+
+# Copiar comandos necesarios para ejecutar init
+for cmd in "${init_commands[@]}"; do
+    echo $cmd
+    copy_command "$cmd"
+    echo -e "\n\n"
+done

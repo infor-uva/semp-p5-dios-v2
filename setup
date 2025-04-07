@@ -1,0 +1,11 @@
+#! /bin/bash
+
+# DIR_SETUP=$(dirname "$(realpath "$0")")
+
+# Verificar si ya estamos en el directorio donde está el script setup
+# if [ "$(pwd)" != "$DIR_SETUP" ]; then
+#    cd "$DIR_SETUP" || exit 1  # Cambiar al directorio de setup
+#fi
+export DS=$PWD
+export PATH=$PWD:/usr/bin:$PATH
+export A=/opt-A

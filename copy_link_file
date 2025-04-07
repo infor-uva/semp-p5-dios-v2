@@ -1,0 +1,35 @@
+#!/bin/bash
+path="$1"
+dest="${2:-/opt-A}" # Si no se pasa el segundo argumento, se usa "/opt-A"
+
+# Verificar si el archivo o directorio existe
+dest_file=$dest$path
+if [ -e "$path" ] && [ ! -e $dest_file ]; then
+  echo -e "\tcp -a \"$path\" \"$dest_file\""
+  dest_dir=$(dirname $dest_file)
+  [ ! -e $dest_dir ] && mkdir -p $dest_dir
+
+  cp -a "$path" "$dest_file"
+
+  # Comprobar si el archivo es un enlace simbólico
+  if [ -L "$path" ]; then
+    # Obtener la ruta a la que apunta el enlace simbólico
+    target=$(readlink "$path")
+    if [[ "$target" != /* ]]; then
+      # Accedemos a la ruta del fichero original para respetar la ruta relativa del enlace
+      cd $(dirname "$path")
+      file=$(basename $target)
+      # Accedemos ahora a la ruta relativa
+      cd $(dirname $target)
+      target=$PWD/$file
+    fi
+
+    echo -e "\tLink found, following link --> \"$target\""
+    # Llamar al script nuevamente con la nueva ruta (seguimos el enlace simbólico)
+    "$0" "$target" "$dest"
+  fi
+elif [ -e $dest_file ]; then
+  echo "El archivo \"$dest_file\" ya existe"
+else
+  echo "El archivo \"$path\" no existe"
+fi
