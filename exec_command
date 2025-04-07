@@ -33,18 +33,17 @@ for cmd in "${commands[@]}"; do
 done
 
 # Copiar enlace simbólico /usr/bin/bash
-cp -a /usr/bin/bash $dest_dir/usr/bin
+cpo -p $dest_dir /usr/bin/bash
 
 echo "Copiando librarías dinámicas imprescindibles"
-libs=/lib64/libnss_{compat,dns,files}*
-if [ "$(ls $dest/$libs)" == "" ]; then
-    for lib in; do
+for lib in /lib64/libnss_{compat,dns,files}*; do
+    if [ ! -e $dest_dir$lib ]; then
         copy_link_file "$lib" "$dest_dir"
         copy_libraries "$lib" "$dest_dir"
-    done
-else
-    echo -e "\tLa librería ya existe en el destino \"$dest\""
-fi
+    else
+        echo -e "\tLa librería ya existe en el destino \"$dest\""
+    fi
+done
 
 library=/lib64/ld-linux-x86-64.so.2
 echo "Coping \"$library\""
