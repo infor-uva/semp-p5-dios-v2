@@ -6,7 +6,7 @@ echo -e "\n$command"
 path=$(which "$command" 2>/dev/null)
 if [ -z "$path" ]; then
   echo "El comando $command no está disponible en el sistema."
-elif [ -e $dest$path ]; then
+elif [ -e "$dest$path" ]; then
   echo "El comando $dest$path ya está en el destino"
 else
   echo "Copy command \"$path\""

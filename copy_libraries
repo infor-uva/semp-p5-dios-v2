@@ -1,12 +1,14 @@
 #! /usr/bin/bash
 
-path=$1
-dest=$2
+path="$1"
+dest="$2"
 ldd $path >/dev/null 2>&1
 if [[ $? -eq 0 ]]; then
     for library in $(ldd $path | awk '{print $3}'); do
-        echo "Coping library \"$library\""
-        copy_link_file $library $dest
-        $0 $library $dest
+        if [ ! -e "$dest$library" ]; then
+            echo "Coping library \"$library\""
+            copy_link_file "$library" "$dest"
+            "$0" "$library" "$dest"
+        fi
     done
 fi

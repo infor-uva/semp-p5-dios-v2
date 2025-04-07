@@ -23,10 +23,10 @@ function cpo() {
     # Crear el directorio si no existe
     if [ ! -d "$dir" ]; then
       echo mkdir -p $dir
-      # mkdir -p "$dir"
+      mkdir -p "$dir"
     fi
     echo cp -a $file $dest
-    # cp -a "$file" "$dest"
+    cp -a "$file" "$dest"
   fi
 }
 

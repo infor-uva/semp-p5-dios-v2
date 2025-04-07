@@ -4,7 +4,11 @@ dest="${2:-/opt-A}" # Si no se pasa el segundo argumento, se usa "/opt-A"
 
 # Verificar si el archivo o directorio existe
 dest_file=$dest$path
-if [ -e "$path" ] && [ ! -e $dest_file ]; then
+if [ ! -e "$path" ]; then
+  echo "El archivo \"$path\" no existe"
+elif [ -e $dest_file ]; then
+  echo "El archivo \"$dest_file\" ya existe"
+else
   echo -e "\tcp -a \"$path\" \"$dest_file\""
   dest_dir=$(dirname $dest_file)
   [ ! -e $dest_dir ] && mkdir -p $dest_dir
@@ -28,8 +32,4 @@ if [ -e "$path" ] && [ ! -e $dest_file ]; then
     # Llamar al script nuevamente con la nueva ruta (seguimos el enlace simbólico)
     "$0" "$target" "$dest"
   fi
-elif [ -e $dest_file ]; then
-  echo "El archivo \"$dest_file\" ya existe"
-else
-  echo "El archivo \"$path\" no existe"
 fi
