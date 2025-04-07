@@ -37,7 +37,8 @@ cpo -p $dest_dir /usr/bin/bash
 
 echo "Copiando librarías dinámicas imprescindibles"
 for lib in /lib64/libnss_{compat,dns,files}*; do
-    if [ ! -e $dest_dir$lib ]; then
+    dest=$dest_dir$lib
+    if [ ! -e ]; then
         copy_link_file "$lib" "$dest_dir"
         copy_libraries "$lib" "$dest_dir"
     else
