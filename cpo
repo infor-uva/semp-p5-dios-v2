@@ -50,10 +50,7 @@ done
 # Desplazar los argumentos para obtener los archivos
 shift $((OPTIND - 1))
 
-# Si no se especifica un prefijo, se usa el valor predeterminado
-prefix=${prefix:-/opt-A}
-
 # Procesar todos los archivos pasados como argumentos
 for file in "$@"; do
-  cpo "$file" || exit $?
+  cpo "$file" $prefix || exit $?
 done
