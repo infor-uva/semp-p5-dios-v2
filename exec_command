@@ -2,6 +2,8 @@
 
 # Directorio destino
 dest_dir="${1:-/opt-A}"
+[[ ${dest_dir: -1} == "/" ]] && dest_dir="${dest_dir%/}"
+
 cd $dest_dir
 [ ! -d dev -o ! -d etc ] && cp -a /dev /etc $dest_dir
 if [ ! -d root -o ! -d tmp ]; then
