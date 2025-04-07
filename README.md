@@ -24,3 +24,8 @@ Copia un fichero manteniendo la estructura de enlaces en caso de tenerla
 ```bash
 copy_link_file <path_to_file> [ <dest_path> ]
 ```
+### `cpo`
+Copia los ficheros pasados por parámetros respetando la ruta.
+```bash
+cpo [-p <prefix_path_dest> ] file1 [file2 ...]
+```
