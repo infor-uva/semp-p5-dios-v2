@@ -2,10 +2,10 @@
 
 # Directorio destino
 dest_dir="${1:-/opt-A}"
-[[ ${dest_dir: -1} == "/" ]] && dest_dir="${dest_dir%/}"
+[[ "${dest_dir: -1}" == "/" ]] && dest_dir="${dest_dir%/}"
 
-cd $dest_dir
-[ ! -d dev -o ! -d etc ] && cp -a /dev /etc $dest_dir
+cd "$dest_dir"
+[ ! -d dev -o ! -d etc ] && cp -a /dev /etc "$dest_dir"
 if [ ! -d root -o ! -d tmp ]; then
     mkdir -p bin lib lib64 proc root sys tmp sbin usr/{bin,sbin} var/state/dhcp var/{tmp,log} dev/shm
     chmod 710 root
@@ -25,7 +25,7 @@ for cmd in "${commands[@]}"; do
     echo $cmd
     dest="$dest_dir$(which "$cmd")"
     if [ ! -e $dest ]; then
-        copy_command "$cmd" $dest
+        copy_command "$cmd" "$dest_dir"
     else
         echo -e "\tEl comando ya existe en el destino \"$dest\""
     fi
@@ -38,7 +38,7 @@ cpo -p $dest_dir /usr/bin/bash
 echo "Copiando librarías dinámicas imprescindibles"
 for lib in /lib64/libnss_{compat,dns,files}*; do
     dest=$dest_dir$lib
-    if [ ! -e ]; then
+    if [ ! -e "$dest" ]; then
         copy_link_file "$lib" "$dest_dir"
         copy_libraries "$lib" "$dest_dir"
     else
@@ -48,7 +48,8 @@ done
 
 library=/lib64/ld-linux-x86-64.so.2
 echo "Coping \"$library\""
-if [ ! -e "$dest_dir/$library" ]; then
+dest=$dest_dir/$library
+if [ ! -e "$dest" ]; then
     copy_link_file "$library" "$dest_dir"
     copy_libraries "$library" "$dest_dir"
 else

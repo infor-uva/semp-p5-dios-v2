@@ -1,0 +1,52 @@
+#! /bin/bash
+
+function cpo() {
+  local file=$1
+  local prefix=${2:-/opt-A}
+
+  if [ ! -e "$file" ]; then
+    echo "No existe fichero \"$file\""
+    return 1
+  fi
+
+  # Obtener la ruta absoluta del archivo con realpath
+  local dest="$prefix$(realpath "$file")"
+
+  # Verificar si ya existe el archivo destino
+  if [ -e "$dest" ]; then
+    echo "Ya existe fichero destino \"$dest\""
+    return 1
+  else
+    # Obtener el directorio de destino
+    local dir=$(dirname "$dest")
+
+    # Crear el directorio si no existe
+    if [ ! -d "$dir" ]; then
+      echo mkdir -p $dir
+      mkdir -p "$dir"
+    fi
+    echo cp -a $file $dest
+    cp -a "$file" "$dest"
+  fi
+}
+
+# Procesar las opciones de la línea de comandos
+while getopts "p:" opt; do
+  case $opt in
+  p)
+    prefix="$OPTARG" # Guardamos el prefijo proporcionado con -p
+    ;;
+  \?)
+    echo "Uso: $(basename "$0") [-p prefijo] archivo1 [archivo2 ...]"
+    exit 1
+    ;;
+  esac
+done
+
+# Desplazar los argumentos para obtener los archivos
+shift $((OPTIND - 1))
+
+# Procesar todos los archivos pasados como argumentos
+for file in "$@"; do
+  cpo "$file" $prefix || exit $?
+done
