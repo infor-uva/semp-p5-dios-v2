@@ -41,7 +41,7 @@ while getopts "p:" opt; do
     prefix="$OPTARG" # Guardamos el prefijo proporcionado con -p
     ;;
   \?)
-    echo "Uso: $0 [-p prefijo] archivo1 [archivo2 ...]"
+    echo "Uso: $(basename "$0") [-p prefijo] archivo1 [archivo2 ...]"
     exit 1
     ;;
   esac
