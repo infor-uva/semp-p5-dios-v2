@@ -7,6 +7,6 @@ if [[ $? -eq 0 ]]; then
     for library in $(ldd $path | awk '{print $3}'); do
         echo "Coping library \"$library\""
         copy_link_file $library $dest
-	$0 $library $dest
+        $0 $library $dest
     done
 fi

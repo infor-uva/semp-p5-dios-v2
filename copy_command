@@ -4,10 +4,12 @@ command=$1
 dest=$2
 echo -e "\n$command"
 path=$(which "$command" 2>/dev/null)
-if [ -n "$path" ]; then
+if [ -z "$path" ]; then
+  echo "El comando $command no está disponible en el sistema."
+elif [ -e $dest$path ]; then
+  echo "El comando $dest$path ya está en el destino"
+else
   echo "Copy command \"$path\""
   copy_link_file $path $dest
   copy_libraries $path $dest
-else
-  echo "El comando $command no está disponible en el sistema."
 fi
