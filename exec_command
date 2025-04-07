@@ -3,14 +3,12 @@
 # Directorio destino
 dest_dir="${1:-/opt-A}"
 cd $dest_dir
-[ ! -d dev -o ! -d etc ] && echo copiando todo && cp -a /dev /etc $dest_dir
+[ ! -d dev -o ! -d etc ] && cp -a /dev /etc $dest_dir
 if [ ! -d root -o ! -d tmp ]; then
     mkdir -p bin lib lib64 proc root sys tmp sbin usr/{bin,sbin} var/state/dhcp var/{tmp,log} dev/shm
     chmod 710 root
     chmod 777 tmp
 fi
-
-exit 0
 
 commands=(
     # User commands
