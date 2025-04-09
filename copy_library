@@ -1,7 +1,8 @@
 #! /usr/bin/bash
 
 path="$1"
-dest="$2"
+dest="${2:-$DEFAULT_DEST}"
+[[ "${dest: -1}" == "/" ]] && dest="${dest%/}"
 ldd $path >/dev/null 2>&1
 if [[ $? -eq 0 ]]; then
     for library in $(ldd $path | awk '{print $3}'); do

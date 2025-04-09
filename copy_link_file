@@ -1,6 +1,6 @@
 #!/bin/bash
 path="$1"
-dest="${2:-/opt-A}" # Si no se pasa el segundo argumento, se usa "/opt-A"
+dest="${2:-$DEFAULT_DEST}"
 [[ "${dest: -1}" == "/" ]] && dest="${dest%/}"
 [[ "${dest:0:1}" == "." ]] && dest=$(cd "$(dirname "$dest")" >/dev/null && pwd)/$(basename $dest)
 

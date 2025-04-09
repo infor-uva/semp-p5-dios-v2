@@ -2,7 +2,8 @@
 
 function cpo() {
   local file=$1
-  local prefix=${2:-/opt-A}
+  local prefix=${2:-$DEFAULT_DEST}
+  [[ "${prefix: -1}" == "/" ]] && prefix="${prefix%/}"
 
   if [ ! -e "$file" ]; then
     echo "No existe fichero \"$file\""
