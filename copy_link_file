@@ -5,8 +5,7 @@ dest="${2:-/opt-A}" # Si no se pasa el segundo argumento, se usa "/opt-A"
 [[ "${dest:0:1}" == "." ]] && dest="$(realpath "$PWD/${dest}")"
 
 # Verificar si el archivo o directorio existe
-dest_file=$dest$(cd "$(dirname "$source")" >/dev/null 2>&1 && pwd)$(basename $path)
-echo $dest_file
+dest_file=$dest$(cd "$(dirname "$source")" >/dev/null 2>&1 && pwd)/$(basename $path)
 if [ ! -e "$path" ]; then
   echo "El archivo \"$path\" no existe"
 elif [ -e $dest_file ]; then
