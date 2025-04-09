@@ -25,7 +25,7 @@ function cpo() {
       echo mkdir -p $dir
       mkdir -p "$dir"
     fi
-    if [ -L "$file"]; then
+    if [ -L "$file" ]; then
       cpo $file $dest
     else
       echo cp -a $file $dest
