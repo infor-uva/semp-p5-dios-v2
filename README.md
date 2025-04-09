@@ -109,10 +109,40 @@ $ tree /tmp/repo
 |   `-- test.sh
 `-- test_2
     `-- ln4 -> ../test/ln3
+$ copy_link_file /tmp/repo/test_2/ln4 ../repo/prueba/
+        cp -a "/tmp/repo/test_2/ln4" "/tmp/repo/prueba/tmp/repo/ln4"
+        cp -a /tmp/repo/test_2/ln4 /tmp/repo/prueba/tmp/repo/ln4
+        Link found, following link --> "/tmp/repo/test/ln3"
+        cp -a "/tmp/repo/test/ln3" "/tmp/repo/prueba/tmp/repo/test/ln3"
+        cp -a /tmp/repo/test/ln3 /tmp/repo/prueba/tmp/repo/test/ln3
+        Link found, following link --> "/tmp/repo/test/ln2"
+        cp -a "/tmp/repo/test/ln2" "/tmp/repo/prueba/tmp/repo/test/ln2"
+        cp -a /tmp/repo/test/ln2 /tmp/repo/prueba/tmp/repo/test/ln2
+        Link found, following link --> "/tmp/repo/test/ln1"
+        cp -a "/tmp/repo/test/ln1" "/tmp/repo/prueba/tmp/repo/test/ln1"
+        cp -a /tmp/repo/test/ln1 /tmp/repo/prueba/tmp/repo/test/ln1
+        Link found, following link --> "/tmp/repo/test/test.sh"
+        cp -a "/tmp/repo/test/test.sh" "/tmp/repo/prueba/tmp/repo/test/test.sh"
+        cp -a /tmp/repo/test/test.sh /tmp/repo/prueba/tmp/repo/test/test.sh
 
-$ copy_link_file /tmp/repo/test_2/ln4 /tmp/prueba
-
-
+$ tree /tmp/repo
+/tmp/repo
+|-- prueba
+|   `-- tmp
+|       `-- repo
+|           |-- ln4 -> ../test/ln3
+|           `-- test
+|               |-- ln1 -> test.sh
+|               |-- ln2 -> ../test/ln1
+|               |-- ln3 -> /tmp/repo/test/ln2
+|               `-- test.sh
+|-- test
+|   |-- ln1 -> test.sh
+|   |-- ln2 -> ../test/ln1
+|   |-- ln3 -> /tmp/repo/test/ln2
+|   `-- test.sh
+`-- test_2
+    `-- ln4 -> ../test/ln3
 ```
 
 ### `cpo`
