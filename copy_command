@@ -1,7 +1,8 @@
 #!/bin/bash
 
 command=$1
-dest=${2:-/opt-A}
+dest="${2:-$DEFAULT_DEST}"
+[[ "${dest: -1}" == "/" ]] && dest="${dest%/}"
 echo -e "\n$command"
 path=$(which "$command" 2>/dev/null)
 if [ -z "$path" ]; then

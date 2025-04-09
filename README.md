@@ -146,7 +146,23 @@ $ tree /tmp/repo
 ```
 
 ### `cpo`
-Copia los ficheros pasados por parámetros respetando la ruta.
+Copia los ficheros pasados por parámetros respetando la ruta. En caso de ser enlaces ejecuta el comando [`copy_link_file`](#copy_link_file)
 ```bash
 cpo [ -p <prefix_path_dest> ] file1 [ file2 ... ]
 ```
+Ejemplo:
+```bash
+# En /bin
+$ cpo -p /tmp/prueba pwd ls bash
+mkdir -p /tmp/prueba/bin
+cp -a pwd /tmp/prueba/bin/pwd
+cp -a ls /tmp/prueba/bin/ls
+cp -a bash /tmp/prueba/bin/bash
+$ tree /tmp/prueba
+/tmp/prueba/
+`-- bin
+    |-- bash
+    |-- ls
+    `-- pwd
+```
+

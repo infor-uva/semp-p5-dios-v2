@@ -2,7 +2,8 @@
 
 function cpo() {
   local file=$1
-  local prefix=${2:-/opt-A}
+  local prefix=${2:-$DEFAULT_DEST}
+  [[ "${prefix: -1}" == "/" ]] && prefix="${prefix%/}"
 
   if [ ! -e "$file" ]; then
     echo "No existe fichero \"$file\""
@@ -25,8 +26,12 @@ function cpo() {
       echo mkdir -p $dir
       mkdir -p "$dir"
     fi
-    echo cp -a $file $dest
-    cp -a "$file" "$dest"
+    if [ -L "$file" ]; then
+      cpo $file $dest
+    else
+      echo cp -a $file $dest
+      cp -a "$file" "$dest"
+    fi
   fi
 }
 
