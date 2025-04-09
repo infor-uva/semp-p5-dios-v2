@@ -16,7 +16,7 @@ else
   [ ! -e $dest_dir ] && mkdir -p $dest_dir
 
   cp -a "$path" "$dest_file"
-  echo cp -a "$path" "$dest_file"
+  echo -e "\t"cp -a "$path" "$dest_file"
 
   # Comprobar si el archivo es un enlace simbólico
   if [ -L "$path" ]; then
