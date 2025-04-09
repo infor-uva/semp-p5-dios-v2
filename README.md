@@ -153,5 +153,16 @@ cpo [ -p <prefix_path_dest> ] file1 [ file2 ... ]
 Ejemplo:
 ```bash
 # En /bin
-cpo bash ls -p /tmp/prueba pwd
+$ cpo -p /tmp/prueba pwd ls bash
+mkdir -p /tmp/prueba/bin
+cp -a pwd /tmp/prueba/bin/pwd
+cp -a ls /tmp/prueba/bin/ls
+cp -a bash /tmp/prueba/bin/bash
+$ tree /tmp/prueba
+/tmp/prueba/
+`-- bin
+    |-- bash
+    |-- ls
+    `-- pwd
+```
 
