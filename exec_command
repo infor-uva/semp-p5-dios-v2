@@ -40,7 +40,7 @@ for lib in /lib64/libnss_{compat,dns,files}*; do
     dest=$dest_dir$lib
     if [ ! -e "$dest" ]; then
         copy_link_file "$lib" "$dest_dir"
-        copy_libraries "$lib" "$dest_dir"
+        copy_library "$lib" "$dest_dir"
     else
         echo -e "\tLa librería ya existe en el destino \"$dest\""
     fi
@@ -51,7 +51,7 @@ echo "Coping \"$library\""
 dest=$dest_dir/$library
 if [ ! -e "$dest" ]; then
     copy_link_file "$library" "$dest_dir"
-    copy_libraries "$library" "$dest_dir"
+    copy_library "$library" "$dest_dir"
 else
     echo -e "\tLa librería ya existe en el destino \"$dest\""
 fi

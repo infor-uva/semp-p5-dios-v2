@@ -1,6 +1,7 @@
 #!/bin/bash
 path="$1"
 dest="${2:-/opt-A}" # Si no se pasa el segundo argumento, se usa "/opt-A"
+[[ "${dest: -1}" == "/" ]] && dest="${dest%/}"
 
 # Verificar si el archivo o directorio existe
 dest_file=$dest$path
@@ -14,6 +15,7 @@ else
   [ ! -e $dest_dir ] && mkdir -p $dest_dir
 
   cp -a "$path" "$dest_file"
+  echo -e "\t"cp -a "$path" "$dest_file"
 
   # Comprobar si el archivo es un enlace simbólico
   if [ -L "$path" ]; then

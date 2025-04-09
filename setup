@@ -1,10 +1,13 @@
 #! /bin/bash
 
+# Obtenemos la ruta al setup y por tanto la del repositorio
 source="${BASH_SOURCE[0]}"
 path="$(cd "$(dirname "$source")" >/dev/null 2>&1 && pwd)"
 
-# echo EJECUTADO DESDE $path
-
-export DS=$path
+# Variable de entorno para acceder rápidamente al repositorio
+export REPO="$path"
+# Destino por defecto de los ejecutables
 export A=/opt-A
-export PATH=$path:/usr/bin:$PATH
+export DEFAULT_DEST="$A" # Si se desea modificar el destino por defecto modificar esta variable
+# Agregamos nuestros comandos del repo al PATH
+export PATH=$path:$PATH

@@ -11,5 +11,5 @@ elif [ -e "$dest$path" ]; then
 else
   echo "Copy command \"$path\""
   copy_link_file "$path" "$dest"
-  copy_libraries "$path" "$dest"
+  copy_library "$path" "$dest"
 fi
