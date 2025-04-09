@@ -5,7 +5,8 @@ dest="${2:-/opt-A}" # Si no se pasa el segundo argumento, se usa "/opt-A"
 [[ "${dest:0:1}" == "." ]] && dest="$(realpath "$PWD/${dest}")"
 
 # Verificar si el archivo o directorio existe
-dest_file=$dest$(realpath $path)
+dest_file=$dest$(cd "$(dirname "$source")" >/dev/null 2>&1 && pwd)$(basename $path)
+echo $dest_file
 if [ ! -e "$path" ]; then
   echo "El archivo \"$path\" no existe"
 elif [ -e $dest_file ]; then
@@ -16,6 +17,7 @@ else
   [ ! -e $dest_dir ] && mkdir -p $dest_dir
 
   cp -a "$path" "$dest_file"
+  echo cp -a "$path" "$dest_file"
 
   # Comprobar si el archivo es un enlace simbólico
   if [ -L "$path" ]; then
